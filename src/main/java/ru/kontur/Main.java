@@ -16,15 +16,18 @@ public class Main {
         String dictPath = args[0];
         //Порт для прослушивания
         int port = Integer.parseInt(args[1]);
+
+        final WordSearcher wordSearcher = new WordSearcher(dictPath);
         //Пул для вополнения потоков
         ExecutorService executorService = Executors.newCachedThreadPool();
         try {
             //Создаем сервер
             ServerSocket server = new ServerSocket(port);
             System.out.println("Server started on port:" + port);
+            System.out.println("Dictionary path:" + dictPath);
             while (true) {
                 Socket clientSocket = server.accept();
-                RequestHandler requestHandler = new RequestHandler(clientSocket);
+                RequestHandler requestHandler = new RequestHandler(clientSocket, wordSearcher);
                 executorService.execute(requestHandler);
             }
         } catch (IOException e) {

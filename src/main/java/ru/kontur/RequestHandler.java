@@ -9,9 +9,11 @@ import java.net.Socket;
  */
 public class RequestHandler implements Runnable {
     private final Socket socket;
+    private final WordSearcher wordSearcher;
 
-    public RequestHandler(Socket socket) {
+    public RequestHandler(Socket socket, WordSearcher wordSearcher) {
         this.socket = socket;
+        this.wordSearcher = wordSearcher;
     }
 
     @Override
@@ -26,8 +28,10 @@ public class RequestHandler implements Runnable {
             while ((line = in.readLine()) != null) {
                 if (line.length() == 0)
                     break;
-                System.out.println(line);
+                System.out.println("Receive message:" + line);
             }
+
+            //TODO add server response
 
             //Закрываем все соединения
             out.close();
