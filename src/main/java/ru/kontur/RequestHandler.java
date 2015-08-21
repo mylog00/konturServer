@@ -25,14 +25,16 @@ public class RequestHandler implements Runnable {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 
             String line;
-            while ((line = in.readLine()) != null) {
+            while (true) {
+                line = in.readLine();
                 if (line.length() == 0)
                     break;
                 System.out.println("Receive message:" + line);
+                //TODO add server response
+                out.println("Answer:" + line);
+                out.println();
+                out.flush();
             }
-
-            //TODO add server response
-
             //Закрываем все соединения
             out.close();
             in.close();

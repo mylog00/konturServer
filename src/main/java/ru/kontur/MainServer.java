@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
  * @author Dmitry
  * @since 18.08.2015
  */
-public class Main {
+public class MainServer {
     public static void main(String[] args) {
         //Путь к текстовому	файлу, содержащему словарь
         String dictPath = args[0];
@@ -25,6 +25,7 @@ public class Main {
             ServerSocket server = new ServerSocket(port);
             System.out.println("Server started on port:" + port);
             System.out.println("Dictionary path:" + dictPath);
+            //noinspection InfiniteLoopStatement
             while (true) {
                 Socket clientSocket = server.accept();
                 RequestHandler requestHandler = new RequestHandler(clientSocket, wordSearcher);
