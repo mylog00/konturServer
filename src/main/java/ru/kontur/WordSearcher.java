@@ -10,7 +10,7 @@ import java.util.*;
  * @author Dmitry
  * @since 02.08.2015
  */
-public class WordSearcher {
+public class WordSearcher implements IWordSearcher {
     //Максимальная длинна списка
     private static final int MAX_ANSWER_NUMBER = 10;
     //Сортированный список всех солов
@@ -53,6 +53,7 @@ public class WordSearcher {
      * @return список наиболее часто употребляемых слов начинающихся с {@code searchWord}.<br/>
      * Длинна списка не может быть больше 10.
      */
+    @Override
     public List<String> getMostFrequentlyUsedWords(String searchWord) {
         //Ищем результат в кэше.
         if (this.resultCache.containsKey(searchWord)) {

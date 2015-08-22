@@ -2,6 +2,7 @@ package ru.kontur;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 /**
  * @author Dmitry
@@ -9,13 +10,22 @@ import java.net.Socket;
  */
 public class RequestHandler implements Runnable {
     private final Socket socket;
-    private final WordSearcher wordSearcher;
+    private final IWordSearcher wordSearcher;
 
-    public RequestHandler(Socket socket, WordSearcher wordSearcher) {
+    /**
+     * Создает объект для обработки запросов клиента
+     *
+     * @param socket       сокет для соеденения с клиентом
+     * @param wordSearcher объект реализующий поиск наиболее часто употребляемых слов
+     */
+    public RequestHandler(Socket socket, IWordSearcher wordSearcher) {
         this.socket = socket;
         this.wordSearcher = wordSearcher;
     }
 
+    /**
+     * Метод отбрабатывающий запросы клиента в отдельном потоке
+     */
     @Override
     public void run() {
         try {
@@ -25,15 +35,22 @@ public class RequestHandler implements Runnable {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 
             String line;
-            while (true) {
-                line = in.readLine();
+            while ((line = in.readLine()) != null) {
                 if (line.length() == 0)
                     break;
                 System.out.println("Receive message:" + line);
-                //TODO add server response
-                out.println("Answer:" + line);
-                out.println();
-                out.flush();
+                //Парсим запрос
+                String[] response = line.split(" ");
+                //Проверяем что запрос имеет вид "get prefix"
+                if (response.length == 2 && response[0].equalsIgnoreCase("get")) {
+                    String prefix = response[1];//получаем префикс
+                    //получаем ответ
+                    List<String> answer = this.wordSearcher.getMostFrequentlyUsedWords(prefix);
+                    //отправляем ответ клиенту
+                    answer.forEach(out::println);
+                    out.println();
+                    out.flush();
+                }
             }
             //Закрываем все соединения
             out.close();

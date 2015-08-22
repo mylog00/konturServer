@@ -17,7 +17,7 @@ public class MainServer {
         //Порт для прослушивания
         int port = Integer.parseInt(args[1]);
 
-        final WordSearcher wordSearcher = new WordSearcher(dictPath);
+        final IWordSearcher wordSearcher = new WordSearcher(dictPath);
         //Пул для вополнения потоков
         ExecutorService executorService = Executors.newCachedThreadPool();
         try {
