@@ -15,7 +15,7 @@ public class RequestHandler implements Runnable {
     /**
      * Создает объект для обработки запросов клиента
      *
-     * @param socket       сокет для соеденения с клиентом
+     * @param socket       сокет для соединения с клиентом
      * @param wordSearcher объект реализующий поиск наиболее часто употребляемых слов
      */
     public RequestHandler(Socket socket, IWordSearcher wordSearcher) {
@@ -24,7 +24,7 @@ public class RequestHandler implements Runnable {
     }
 
     /**
-     * Метод отбрабатывающий запросы клиента в отдельном потоке
+     * Метод обрабатывающий запросы клиента в отдельном потоке
      */
     @Override
     public void run() {

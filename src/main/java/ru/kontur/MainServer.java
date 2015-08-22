@@ -18,7 +18,7 @@ public class MainServer {
         int port = Integer.parseInt(args[1]);
 
         final IWordSearcher wordSearcher = new WordSearcher(dictPath);
-        //Пул для вополнения потоков
+        //Пул для выполнения потоков
         ExecutorService executorService = Executors.newCachedThreadPool();
         try {
             //Создаем сервер
@@ -27,7 +27,9 @@ public class MainServer {
             System.out.println("Dictionary path:" + dictPath);
             //noinspection InfiniteLoopStatement
             while (true) {
+                //получаем клиентский сокет
                 Socket clientSocket = server.accept();
+                //обрабатываем запросы в отдельном потоке
                 RequestHandler requestHandler = new RequestHandler(clientSocket, wordSearcher);
                 executorService.execute(requestHandler);
             }
