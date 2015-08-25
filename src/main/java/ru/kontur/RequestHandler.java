@@ -50,6 +50,7 @@ public class RequestHandler implements Runnable {
                     answer.forEach(out::println);
                     out.println();
                     out.flush();
+                    System.out.println("Response send");
                 }
             }
             //Закрываем все соединения

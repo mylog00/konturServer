@@ -55,18 +55,18 @@ public class WordSearcher implements IWordSearcher {
      */
     @Override
     public List<String> getMostFrequentlyUsedWords(String searchWord) {
-        //Ищем результат в кэше.
+        //Поиск результата в кэше
         if (this.resultCache.containsKey(searchWord)) {
             //Если для этого слова уже есть результат, возвращаем его
             return this.resultCache.get(searchWord);
         }
 
-        //Ищем индекс первого слова начинающегося с искомой строки
+        //Поиск индекса первого слова начинающегося с указанной строки
         final int firstElementPos = findFirstBinarySearch(this.sortedWordsList, searchWord);
         List<String> result = Collections.<String>emptyList();
         //Если подходящих слов нет, то результатом будет пустая строка.
         if (firstElementPos >= 0) {
-            //Ищем индекс последнего слова начинающегося с искомой строки
+            //Поиск индекса последнего слова начинающегося с указанной строки
             final int lastElementPos = findLastBinarySearch(this.sortedWordsList, searchWord);
             //Составляем подсписок из найденных слов
             List<String> matchedWords = new ArrayList<>(this.sortedWordsList.subList(firstElementPos, lastElementPos + 1));
@@ -162,11 +162,11 @@ public class WordSearcher implements IWordSearcher {
         Scanner in;
         try {
             in = new Scanner(file);
-            int wordNumber = in.nextInt();//количество слов в найденных текстах
+            int wordNumber = in.nextInt();//количество слов в файле
             Map<String, Integer> wordsFrequency = new HashMap<>(wordNumber);//Частота повторения слова
             while (wordNumber > 0) {
-                String word = in.next();
-                Integer frequency = in.nextInt();
+                String word = in.next();//слово
+                Integer frequency = in.nextInt();//частота его повторения
                 wordsFrequency.put(word, frequency);
                 wordNumber--;
             }
